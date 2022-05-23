@@ -2,7 +2,7 @@
 author      = "Rafflesiaceae"
 backend     = "c"
 bin         = @["obj_to_map"]
-description = "Convert Wavefront .obj (consisting of only convex-hulls) to idtech3 .map"
+description = "Convert Wavefront .obj (consisting of only convex-hulls) to idtech3 .map (https://github.com/Rafflesiaceae/obj-to-map)"
 license     = "GPL-2.0-or-later"
 srcDir      = "src"
 version     = "0.0.0"
