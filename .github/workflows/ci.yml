@@ -12,9 +12,7 @@ jobs:
           - windows-latest
           - macOS-latest
         nim-version:
-          - 1.4.0
           - 1.6.0
-          - devel
 
     runs-on: ${{ matrix.os }}
 
