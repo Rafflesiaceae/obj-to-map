@@ -5,3 +5,4 @@ obj_to_map.exe
 **.blend*
 **.mtl
 **.obj
+!tests/**
