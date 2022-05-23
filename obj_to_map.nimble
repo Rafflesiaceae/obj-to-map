@@ -9,7 +9,7 @@ version     = "0.0.0"
 
 
 # Dependencies
-requires "nim == 1.6.4"
+requires "nim >= 1.6.0"
 requires "https://github.com/stavenko/nim-glm.git#47d5f8681f3c462b37e37ebc5e7067fa5cba4d16"
 
 # Tasks
