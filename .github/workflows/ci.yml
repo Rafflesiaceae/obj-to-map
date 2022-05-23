@@ -1,0 +1,47 @@
+name: CI
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  build-and-quicktest:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macOS-latest
+        nim-version:
+          - 1.4.0
+          - 1.6.0
+          - devel
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Cache choosenim
+      id: cache-choosenim
+      uses: actions/cache@v3
+      with:
+        path: ~/.choosenim
+        key: ${{ runner.os }}-choosenim-${{ matrix.nim-version}}
+
+    - name: Cache nimble
+      id: cache-nimble
+      uses: actions/cache@v3
+      with:
+        path: ~/.nimble
+        key: ${{ runner.os }}-nimble-${{ matrix.nim-version}}-${{ hashFiles('*.nimble') }}
+
+    - name: Setup nim
+      uses: jiro4989/setup-nim-action@v1.3.51
+      with:
+        nim-version: ${{ matrix.nim-version }}
+
+    - name: Install Packages
+      run: nimble install -d -y
+    - name: Test
+      run: nimble test
