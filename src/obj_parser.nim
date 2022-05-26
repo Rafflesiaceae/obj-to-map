@@ -2,6 +2,7 @@ import strutils, lexbase, streams, unicode
 import std/private/decode_helpers
 import parseutils
 import glm
+import strformat
 
 const
   WordChars* = {'a'..'z', 'A'..'Z', '0'..'9', '_', '-', '/', '.', '(', ')'}
@@ -449,13 +450,17 @@ proc next*(my: var WavefrontObjParser): WavefrontObjEvent =
 
 iterator parseWavefrontObj*(s: Stream, filename = ""): WavefrontObjEvent =
   var parser: WavefrontObjParser
-  parser.open(s, filename)
-  defer: parser.close()
+  try:
+    parser.open(s, filename)
+    defer: parser.close()
 
-  # echo filename
-  while true:
-    var e = parser.next()
-    case e.kind
-    of wfobjEof: break
-    else:
-      yield e
+    while true:
+      var e = parser.next()
+      case e.kind
+      of wfobjEof: break
+      else:
+        yield e
+  except:
+    writeLine(stderr, fmt"↓ parser: {parser}")
+    flushFile(stderr)
+    raise
