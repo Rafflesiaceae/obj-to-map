@@ -27,13 +27,13 @@ proc wavefrontObjToMapBrushes*(
           assert face.len == 3
 
           # @TODO :/
-          let v1 = vertices[face[1].vertexIndex-1]
-          let v2 = vertices[face[0].vertexIndex-1]
-          let v3 = vertices[face[2].vertexIndex-1]
+          let v1 = vertices[face[1].vertexIndex]
+          let v2 = vertices[face[0].vertexIndex]
+          let v3 = vertices[face[2].vertexIndex]
 
-          let vn1 = vertexNormals[face[1].normalIndex-1]
-          let vn2 = vertexNormals[face[0].normalIndex-1]
-          let vn3 = vertexNormals[face[2].normalIndex-1]
+          let vn1 = vertexNormals[face[1].normalIndex]
+          let vn2 = vertexNormals[face[0].normalIndex]
+          let vn3 = vertexNormals[face[2].normalIndex]
 
           # var v1x = (v1.x * sizeFactor)
           # var v1y = (v1.y * sizeFactor)

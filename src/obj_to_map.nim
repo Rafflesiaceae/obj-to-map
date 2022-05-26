@@ -11,7 +11,7 @@ proc main =
   let inputf = args[0]
   let outputf = args[1]
 
-  var wfObj = WavefrontObj()
+  var wfObj = newWavefrontObj()
 
   var obj: WavefrontObjObject
 

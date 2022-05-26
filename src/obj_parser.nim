@@ -78,6 +78,19 @@ type
     filename: string
     # rawStringLiterals: bool
 
+# @XXX this is a bit of a hack, this can collide with a legit vertex, but the
+# chance of that seems extremely unlikely
+const emptyVertex* = WavefrontObjVertex(
+  x: high(float64),
+  y: high(float64),
+  z: high(float64),
+)
+
+proc newWavefrontObj*(): WavefrontObj =
+  new(result)
+  result.vertices.add(emptyVertex)
+  result.vertexNormals.add(emptyVertex)
+
 proc open*(my: var WavefrontObjParser, input: Stream, filename: string) =
   lexbase.open(my, input)
   my.filename = filename
@@ -338,7 +351,9 @@ proc parseFaceEntry(my: var WavefrontObjParser): WavefrontObjFaceEntry =
   template assignVal =
     # echo my.a
     var res: uint
-    assert parseUInt(my.a, res) != 0
+    # some indicies (like textureIndex) can be missing (``) which will will make
+    # the call below return 0, which is fine as legit indexes start at 1 anyway
+    discard parseUInt(my.a, res)
     setLen(my.a, 0)
 
     case slashCount
